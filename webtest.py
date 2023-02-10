@@ -1,5 +1,7 @@
 import requests
 
+# Simple script to test the API
+
 BASE = "http://localhost:5000"
 
 print("GET /")

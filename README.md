@@ -88,6 +88,32 @@ Lastly, to test the results you can use the script `ask.py`
 python ask.py "Who is Juan?"
 ```
 
+# Web interface
+
+You can also test the solution on a browser. To do that you can run the script:
+
+```
+python web.py
+```
+
+It will launch a server at http://localhost:5000
+
+You can also query the API manually by making a POST at the endpoint http://localhost:5000/api/answers
+with a JSON body like this
+
+```json
+{"question": "Who is Juan?"}
+```
+
+The response is
+```json
+{ 
+    "question": "Who is Juan?",
+    "answer": "The answer provided by OpenAI API"
+}
+```
+
+
 References:
 * Tutorial to make Q&A using OpenAI API https://platform.openai.com/docs/tutorials/web-qa-embeddings
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
