@@ -1,6 +1,8 @@
+__pycache__/
+*.py[cod]
+
 .env
 text/
 processed/embeddings.csv
 processed/scraped.csv
 Sharepoint-research.md
-__pycache__/
