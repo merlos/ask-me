@@ -16,7 +16,7 @@ First you need to format the data into something that can be used by the API.
 3) **Create a set of embeddings**. Embeddings is a way to translate information into a format (usually a vector of numbers) that machine learning algorithms can use to make predictions or decisions. In our case the embeddings are used to find the documents that most probably have the information that can be used to generate the answer to our question. To create the embeddings the text files will be broken in chunks and create embeddings for each chunk.
 
 
-What happens behind the scenes when you ask a question?
+### What happens behind the scenes when you ask a question?
 
 1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
 
@@ -48,7 +48,7 @@ Clone this repo:
   export OPENAI_API_KEY=<your key>
 
   # Windows
-  setenv OPENAI_API_KET=<your key>
+  setenv OPENAI_API_KEY=<your key>
   ```
   Then, tou can test the API is working by running
 
@@ -117,8 +117,6 @@ The response is
 References:
 * Tutorial to make Q&A using OpenAI API https://platform.openai.com/docs/tutorials/web-qa-embeddings
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
-
-
 
 
 # LICENSE MIT
