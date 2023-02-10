@@ -36,32 +36,31 @@ Clone this repo:
     source venv/bin/activate
     ```
 2. Install requirements
-
-  ```shell
-  pip install -r requirements.txt
-  ```
-3. Set the API key env
+    ```shell
+    pip install -r requirements.txt
+    ```
+3. Set the OpenAI API key environment variable
   
-  ```shell
-  
-  # OSX and GNU/Linux
-  export OPENAI_API_KEY=<your key>
+    ```shell
 
-  # Windows
-  setenv OPENAI_API_KEY=<your key>
-  ```
-  Then, tou can test the API is working by running
+    # OSX and GNU/Linux
+    export OPENAI_API_KEY=<your key>
+
+    # Windows
+    setenv OPENAI_API_KEY=<your key>
+    ```
+  
+  Then, you can test the API is working by running
 
   ```shell
   python openai_api_test.py
   ```
 
-## Step 1: Collect/Scrapping the data
+### Step 1: Collect/Scrapping the data
 
+Scrap the webpage that will be used as source or your knowledge base from.
 
-First scrap the webpage you want to create the knowledge base from.
-
-Edit the file scrapper.py and update the domains to get the data from.
+Edit the file `scrapper.py` and update the domain from you want to gather the data
 
 ```python
 # Define root domain to crawl
@@ -69,43 +68,56 @@ domain = "www.merlos.org"
 full_url = "https://www.merlos.org"
 ```
 
+The run it:
+
 ```shell
 python scrapper.py
 ```
+This will create the folder `text/<domain>/` with the scrapped pages in text format.
 
-This will create a folder `text/<domain>/` with the scrapped pages as well as `processed/scrapped.csv`
+Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. 
 
-Them run process
+### Step 2: Process the data.
+
+Same as above, update the domain: 
+
+```python
+domain = "www.merlos.org"
+full_url = "https://www.merlos.org"
+```
+
+And then run the script:
 
 ```shell
 python process.py
 ```
-This will create the file `processed/embeddings.csv`
 
-Lastly, to test the results you can use the script `ask.py`
+This will create the files `processed/scrapped.csv`, just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
+
+## Usage
+
+
+Now it is time to make the questions to the AI. You can use the command line script `ask.py` with the question as argument.
 
 ```shell
 python ask.py "Who is Juan?"
 ```
 
-# Web interface
+Alternatively you can test the output on a browser, run the script:
 
-You can also test the solution on a browser. To do that you can run the script:
-
-```
+```shell
 python web.py
 ```
 
-It will launch a server at http://localhost:5000
+Then open a browser with the address http://localhost:5000
 
-You can also query the API manually by making a POST at the endpoint http://localhost:5000/api/answers
-with a JSON body like this
+Finally, you can also query the API of `web.py` manually by making a `POST` at the endpoint http://localhost:5000/api/answers
+with a JSON body like this:
 
 ```json
 {"question": "Who is Juan?"}
 ```
-
-The response is
+The response something like:
 ```json
 { 
     "question": "Who is Juan?",
@@ -113,10 +125,18 @@ The response is
 }
 ```
 
+## References
 
-References:
 * Tutorial to make Q&A using OpenAI API https://platform.openai.com/docs/tutorials/web-qa-embeddings
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
 
 
-# LICENSE MIT
+## LICENSE MIT
+
+Copyright (c) 2023 Juan M. Merlos @merlos and contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
