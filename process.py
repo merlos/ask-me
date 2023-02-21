@@ -3,14 +3,29 @@ import pandas as pd
 import tiktoken
 import openai
 import time
+import argparse
+import re
+from urllib.parse import urlparse
 
 from config import CONFIG
 
+HTTP_URL_PATTERN = r'^http[s]*://.+'
 
-# TODO make this a input parameter
-# Define root domain to crawl
-domain = "www.merlos.org"
 
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Simple web scrapper')
+
+# Required positional argument
+parser.add_argument('full_url', type=str, help='Website to scrap. Example: http://www.merlos.org')
+
+args = parser.parse_args()
+
+
+if not re.search(HTTP_URL_PATTERN, args.full_url):
+    parser.error('full_url shall start with http:// or https://. Example: https://www.merlos.org')
+    
+# Get local domain
+local_domain = urlparse(args.full_url).netloc
 
 
 
@@ -25,13 +40,16 @@ def remove_newlines(serie):
 # Create a list to store the text files
 texts=[]
 
+dir_path = "text/" + local_domain + "/"
+print (f'Will process text files in {dir_path}')
+
 # Get all the text files in the text directory
-for file in os.listdir("text/" + domain + "/"):
-
+for file in os.listdir(dir_path):
+    print(f'   Processing {file}')
     # Open the file and read the text
-    with open("text/" + domain + "/" + file, "r", encoding="UTF-8") as f:
+    with open(dir_path + file, "r", encoding="UTF-8") as f:
         text = f.read()
-
+        
         # Omit the first 11 lines and the last 4 lines, then replace -, _, and #update with spaces.
         texts.append((file[11:-4].replace('-',' ').replace('_', ' ').replace('#update',''), text))
 
@@ -40,14 +58,15 @@ df = pd.DataFrame(texts, columns = ['fname', 'text'])
 
 # Set the text column to be the raw text with the newlines removed
 df['text'] = df.fname + ". " + remove_newlines(df.text)
-df.to_csv(CONFIG['knowledge_base_csv'])
-df.head()
+df.to_csv(CONFIG['corpus_csv'])
+#df.head()
 
+print(f"Saved CSV file {CONFIG['corpus_csv']}")
 
 # Load the cl100k_base tokenizer which is designed to work with the ada-002 model
 tokenizer = tiktoken.get_encoding("cl100k_base")
 
-df = pd.read_csv('processed/scraped.csv', index_col=0)
+df = pd.read_csv(CONFIG['corpus_csv'], index_col=0)
 df.columns = ['title', 'text']
 
 # Tokenize the text and save the number of tokens to a new column

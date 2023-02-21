@@ -4,5 +4,5 @@ __pycache__/
 .env
 text/
 processed/embeddings.csv
-processed/scraped.csv
+processed/corpus.csv
 Sharepoint-research.md

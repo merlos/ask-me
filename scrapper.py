@@ -6,13 +6,15 @@ from collections import deque
 from html.parser import HTMLParser
 from urllib.parse import urlparse
 import os
+import argparse
+import time
+
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Optional app description')
 
 # Regex pattern to match a URL
 HTTP_URL_PATTERN = r'^http[s]*://.+'
 
-# Define root domain to crawl
-domain = "www.merlos.org"
-full_url = "https://www.merlos.org/"
 
 # Create a class to parse the HTML and get the hyperlinks
 class HyperlinkParser(HTMLParser):
@@ -29,18 +31,14 @@ class HyperlinkParser(HTMLParser):
         if tag == "a" and "href" in attrs:
             self.hyperlinks.append(attrs["href"])
 
-################################################################################
-### Step 2
-################################################################################
 
 # Function to get the hyperlinks from a URL
 def get_hyperlinks(url):
-    print(f'get_hyperlinks {url}')    
+    print(f'        -- get_hyperlinks {url}')    
     # Try to open the URL and read the HTML
     try:
         # Open the URL and read the HTML
         with urllib.request.urlopen(url) as response:
-            #echo "hola"
             # If the response is not HTML, return an empty list
             if not response.info().get('Content-Type').startswith("text/html"):
                 return []
@@ -51,24 +49,20 @@ def get_hyperlinks(url):
         print(e)
         return []
 
-    print(html)
+    #print(html)
     # Create the HTML Parser and then Parse the HTML to get hyperlinks
     parser = HyperlinkParser()
     parser.feed(html)
 
     return parser.hyperlinks
 
-################################################################################
-### Step 3
-################################################################################
 
 # Function to get the hyperlinks from a URL that are within the same domain
 def get_domain_hyperlinks(local_domain, url):
     clean_links = []
-    print(f'get_domain_hyperlinks {local_domain}, {url}')
     for link in set(get_hyperlinks(url)):
         clean_link = None
-        print(f'get_domain_hyperlinks: link: {link}')
+        print(f'       - get_domain_hyperlinks: link: {link}')
         # If the link is a URL, check if it is within the same domain
         if re.search(HTTP_URL_PATTERN, link):
             # Parse the URL and check if the domain is the same
@@ -93,11 +87,8 @@ def get_domain_hyperlinks(local_domain, url):
     return list(set(clean_links))
 
 
-################################################################################
-### Step 4
-################################################################################
 
-def crawl(url):
+def crawl(url, sleep=0):
     # Parse the URL and get the domain
     local_domain = urlparse(url).netloc
 
@@ -130,9 +121,10 @@ def crawl(url):
             print("     -> Calling beautiful soup getting url")
             # Get the text from the URL using BeautifulSoup
             soup = BeautifulSoup(requests.get(url).text, "html.parser")
-            text_filename = 'text/'+local_domain+'/'+url[8:].replace("/", "_") + ".txt"
+            text_filename = 'text/'+local_domain+'/'+url[8:].replace("/", "_")[8:40] + ".txt"
             # Get the text but remove the tags
             text = soup.get_text()
+            
             print(f"     -> Beautiful soup response {text_filename}")
             # If the crawler gets to a page that requires JavaScript, it will stop the crawl
             if ("You need to enable JavaScript to run this app." in text):
@@ -140,6 +132,8 @@ def crawl(url):
             
             # Otherwise, write the text to the file in the text directory
             f.write(text)
+            if sleep is not 0:
+                time.sleep(sleep) 
 
         # Get the hyperlinks from the URL and add them to the queue
         for link in get_domain_hyperlinks(local_domain, url):
@@ -147,4 +141,22 @@ def crawl(url):
                 queue.append(link)
                 seen.add(link)
 
-crawl(full_url)
+
+
+import argparse
+
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Simple web scrapper')
+
+# Required positional argument
+parser.add_argument('full_url', type=str, help='Website to scrap. Example: http://www.merlos.org')
+parser.add_argument('-s', '--sleep', type=int, default=0, nargs='?', help='Seconds to wait between requests')
+
+args = parser.parse_args()
+
+
+if not re.search(HTTP_URL_PATTERN, args.full_url):
+    parser.error('url shall start with http:// or https://. Example: https://www.merlos.org')
+
+# Crawl 
+crawl(args.full_url, sleep=args.sleep)

@@ -61,42 +61,23 @@ After cloning this repo (`git clone https://github.com/merlos/ask-me/`):
 
 Scrap the webpage that will be used as source or your knowledge base from.
 
-Edit the file `scrapper.py` and update the domain from you want to gather the data
-
-```python
-# Define root domain to crawl
-domain = "www.merlos.org"
-full_url = "https://www.merlos.org"
-```
-
-The run it:
-
 ```shell
-python scrapper.py
+python scrapper.py https://www.merlos.org
 ```
-This will create the folder `text/<domain>/` with the scrapped pages in text format.
+This will create the folder `text/www.merlos.org/` with the scrapped pages in text format.
 
 Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) in the `./text` folder
 
 ### Step 2: Process the data.
 
-Same as above, update the domain in `process.py`: 
-
-```python
-domain = "www.merlos.org"
-full_url = "https://www.merlos.org"
-```
-
-And then run the script:
-
+Run the script with the same domain
 ```shell
-python process.py
+python process.py https://www.merlos.org
 ```
 
-This will create the files `processed/scrapped.csv`, just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
+This will create the files `processed/corpus.csv`, which is just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
 
 ## Usage
-
 
 Now it is time to make the questions to the AI. You can use the command line script `ask.py` with the question as argument.
 
@@ -118,7 +99,7 @@ with a JSON body like this:
 ```json
 {"question": "Who is Juan?"}
 ```
-The response something like:
+The response is something like:
 ```json
 { 
     "question": "Who is Juan?",
