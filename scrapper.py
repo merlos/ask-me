@@ -1,7 +1,3 @@
-################################################################################
-### Step 1
-################################################################################
-
 import requests
 import re
 import urllib.request
@@ -10,13 +6,6 @@ from collections import deque
 from html.parser import HTMLParser
 from urllib.parse import urlparse
 import os
-import pandas as pd
-import tiktoken
-import openai
-from openai.embeddings_utils import distances_from_embeddings
-import pandas as pd
-import numpy as np
-from openai.embeddings_utils import distances_from_embeddings, cosine_similarity
 
 # Regex pattern to match a URL
 HTTP_URL_PATTERN = r'^http[s]*://.+'
