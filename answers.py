@@ -9,8 +9,7 @@ from config import CONFIG
 # Read the embeddings
 df=pd.read_csv(CONFIG['embeddings_csv'], index_col=0)
 df['embeddings'] = df['embeddings'].apply(eval).apply(np.array)
-
-df.head()
+#df.head()
 
 
 def create_context(
