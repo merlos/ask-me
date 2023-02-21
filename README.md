@@ -27,9 +27,10 @@ First you need to format the data into something that can be used by the API.
 Pre-requisites:
 
 * Python (it was tested with v3.9)
-* Open API account, and the creation of an [API key](https://platform.openai.com/account/api-keys). You get $18 USD of free credits for testing.
+* [OpenAI account](https://platform.openai.com/), and and [API key](https://platform.openai.com/account/api-keys). You get $18 USD of free credits for testing.
 
-Clone this repo:
+
+After cloning this repo (`git clone https://github.com/merlos/ask-me/`):
 
 1. Activate the virtual environment 
     ```shell
@@ -75,11 +76,11 @@ python scrapper.py
 ```
 This will create the folder `text/<domain>/` with the scrapped pages in text format.
 
-Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. 
+Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) in the `./text` folder
 
 ### Step 2: Process the data.
 
-Same as above, update the domain: 
+Same as above, update the domain in `process.py`: 
 
 ```python
 domain = "www.merlos.org"
