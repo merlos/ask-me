@@ -10,12 +10,9 @@ from config import CONFIG
 # TODO make this a input parameter
 # Define root domain to crawl
 domain = "www.merlos.org"
-full_url = "https://www.merlos.org/"
 
 
-################################################################################
-### Step 5
-################################################################################
+
 
 def remove_newlines(serie):
     serie = serie.str.replace('\n', ' ')
