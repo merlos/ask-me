@@ -157,5 +157,5 @@ print(f"Processing {df.shape[0]} embeddings...")
 # For testing
 #df['embeddings'] = df[0:1].text.apply(process_embeddings)
 df['embeddings'] = df.text.apply(process_embeddings)
-df.to_csv(CONFIG[embeddings_csv])
+df.to_csv(CONFIG['embeddings_csv'])
 print(df.head())
