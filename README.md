@@ -4,24 +4,6 @@ Ask me is a proof of concept (PoC) of the use of OpenAI GPT that allows you to a
 
 It is based on the OpenAI tutorial that explains how to make a [Q&A for a web content](https://platform.openai.com/docs/tutorials/web-qa-embeddings)
 
-
-## How does it work?
-
-First you need to format the data into something that can be used by the API.
-
-1) **Gather the content you want to use** This can be defining the set of webpages that can be browsed, a set of PDF, markdown, word files that have the content.
-
-2) **Convert the content of txt files**. Convert those files into plain text. We need this step because the model that generates the answer needs plain text as input.
-
-3) **Create a set of embeddings**. Embeddings is a way to translate information into a format (usually a vector of numbers) that machine learning algorithms can use to make predictions or decisions. In our case the embeddings are used to find the documents that most probably have the information that can be used to generate the answer to our question. To create the embeddings the text files will be broken in chunks and create embeddings for each chunk.
-
-
-### What happens behind the scenes when you ask a question?
-
-1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
-
-2) Once we have the text that most likely have the answer, we'll ask the AI behind ChatGPT (i.e GPT) to build an answer based on the chunks of text attached. 
-
 ## Setup
 
 Pre-requisites:
@@ -57,7 +39,9 @@ After cloning this repo (`git clone https://github.com/merlos/ask-me/`):
   python openai_api_test.py
   ```
 
-### Step 1: Collect/Scrapping the data
+## Usage
+
+### Step 1: Collect/Scrap the data
 
 Scrap the webpage that will be used as source or your knowledge base from.
 
@@ -106,6 +90,24 @@ The response is something like:
     "answer": "The answer provided by OpenAI API"
 }
 ```
+
+## How does it work?
+
+First you need to format the data into something that can be used by the API.
+
+1) **Gather the content you want to use** This can be defining the set of webpages that can be browsed, a set of PDF, markdown, word files that have the content.
+
+2) **Convert the content of txt files**. Convert those files into plain text. We need this step because the model that generates the answer needs plain text as input.
+
+3) **Create a set of embeddings**. Embeddings is a way to translate information into a format (usually a vector of numbers) that machine learning algorithms can use to make predictions or decisions. In our case the embeddings are used to find the documents that most probably have the information that can be used to generate the answer to our question. To create the embeddings the text files will be broken in chunks and create embeddings for each chunk.
+
+
+## What happens behind the scenes when you ask a question?
+
+1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
+
+2) Once we have the text that most likely have the answer, we'll ask the AI behind ChatGPT (i.e GPT) to build an answer based on the chunks of text attached. 
+
 
 ## References
 
