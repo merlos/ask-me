@@ -1,6 +1,6 @@
 # Ask me
 
-Ask me is a proof of concept (PoC) of the use of OpenAI GPT that allows you to ask questions based on the content of a particular knowledge base.
+Ask me is a proof of concept (PoC) of the use of OpenAI GPT that allows you to ask questions based on the content of a particular knowledge base (corpus), for example, your website, your organization regulatory framework, guidance, or a particular set of documents.
 
 It is based on the OpenAI tutorial that explains how to make a [Q&A for a web content](https://platform.openai.com/docs/tutorials/web-qa-embeddings)
 
@@ -111,11 +111,13 @@ The response is something like:
 
 * Tutorial to make Q&A using OpenAI API https://platform.openai.com/docs/tutorials/web-qa-embeddings
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
+* A more advanced version using Dagster and LangChain https://dagster.io/blog/chatgpt-langchain
+* A version using LangChain and a Notion DB https://github.com/hwchase17/langchain
 
 
 ## LICENSE MIT
 
-Copyright (c) 2023 Juan M. Merlos @merlos and contributors.
+Copyright (c) 2023 Juan M. Merlos @merlos.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
