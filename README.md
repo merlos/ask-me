@@ -111,8 +111,8 @@ The response is something like:
 
 * Tutorial to make Q&A using OpenAI API https://platform.openai.com/docs/tutorials/web-qa-embeddings
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
-* A more advanced version using Dagster and LangChain https://dagster.io/blog/chatgpt-langchain
-* A version using LangChain and a Notion DB https://github.com/hwchase17/langchain
+* A more advanced version using [Dagster](https://dagster.io) and [LangChain](https://github.com/hwchase17/langchain) https://dagster.io/blog/chatgpt-langchain
+* A version using [LangChain](https://github.com/hwchase17/langchain) and a Notion DB https://github.com/hwchase17/notion-qa 
 
 
 ## LICENSE MIT
