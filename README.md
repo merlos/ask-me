@@ -52,6 +52,12 @@ This will create the folder `text/www.merlos.org/` with the scrapped pages in te
 
 Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) in the `./text` folder
 
+In addition the script `pdftotext.py` is provided. This script takes a set of PDFs and converts them into txt files
+
+```shell
+python pdftotext ./path/to/pdf --output ./text/www.domain.com/
+```
+
 ### Step 2: Process the data.
 
 Run the script with the same domain
