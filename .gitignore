@@ -5,4 +5,8 @@ __pycache__/
 text/
 processed/embeddings.csv
 processed/corpus.csv
+
+# Custom testing
+processed/embeddings-digital-resilience.csv
+processed/corpus-digital-resilience.csv
 Sharepoint-research.md
