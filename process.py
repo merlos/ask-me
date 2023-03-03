@@ -42,9 +42,7 @@ for file in os.listdir(text_files_path):
     # Open the file and read the text
     with open(text_files_path + file, "r", encoding="UTF-8") as f:
         text = f.read()
-        
-        # Omit the first 11 lines and the last 4 lines, then replace -, _, and #update with spaces.
-        texts.append((file[11:-4].replace('-',' ').replace('_', ' ').replace('#update',''), text))
+        texts.append((file, text))
 
 # Create a dataframe from the list of texts
 df = pd.DataFrame(texts, columns = ['fname', 'text'])
