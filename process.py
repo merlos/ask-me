@@ -4,30 +4,8 @@ import tiktoken
 import openai
 import time
 import argparse
-import re
-from urllib.parse import urlparse
 
 from config import CONFIG
-
-HTTP_URL_PATTERN = r'^http[s]*://.+'
-
-
-# Instantiate the parser
-parser = argparse.ArgumentParser(description='Simple web scrapper')
-
-# Required positional argument
-parser.add_argument('full_url', type=str, help='Website to scrap. Example: http://www.merlos.org')
-
-args = parser.parse_args()
-
-
-if not re.search(HTTP_URL_PATTERN, args.full_url):
-    parser.error('full_url shall start with http:// or https://. Example: https://www.merlos.org')
-    
-# Get local domain
-local_domain = urlparse(args.full_url).netloc
-
-
 
 def remove_newlines(serie):
     serie = serie.str.replace('\n', ' ')
@@ -37,17 +15,32 @@ def remove_newlines(serie):
     return serie
 
 
+# Instantiate the parser
+parser = argparse.ArgumentParser(description='Process txt files into embeddings')
+
+# Required positional argument
+parser.add_argument('text_files_path', type=str, help='Folder with txt files to process. For example: ./text/www.merlos.org')
+
+args = parser.parse_args()
+
+text_files_path = args.text_files_path
+
+# If input path does not exist -> stop
+if not os.path.exists(text_files_path):
+        parser.error(f"input_path directory '{text_files_path}' does not exist.")
+
+print (f'Will process text files in {text_files_path}')
+
+
 # Create a list to store the text files
 texts=[]
 
-dir_path = "text/" + local_domain + "/"
-print (f'Will process text files in {dir_path}')
 
 # Get all the text files in the text directory
-for file in os.listdir(dir_path):
+for file in os.listdir(text_files_path):
     print(f'   Processing {file}')
     # Open the file and read the text
-    with open(dir_path + file, "r", encoding="UTF-8") as f:
+    with open(text_files_path + file, "r", encoding="UTF-8") as f:
         text = f.read()
         
         # Omit the first 11 lines and the last 4 lines, then replace -, _, and #update with spaces.

@@ -48,9 +48,8 @@ Scrap the webpage that will be used as source or your knowledge base from.
 ```shell
 python scrapper.py https://www.merlos.org
 ```
-This will create the folder `text/www.merlos.org/` with the scrapped pages in text format.
+This will create the folder `./text/www.merlos.org/` with the scrapped pages in text format.
 
-Note: This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) in the `./text` folder
 
 In addition the script `pdftotext.py` is provided. This script takes a set of PDFs and converts them into txt files
 
@@ -58,11 +57,15 @@ In addition the script `pdftotext.py` is provided. This script takes a set of PD
 python pdftotext ./path/to/pdf --output ./text/www.domain.com/
 ```
 
+**Note:** _This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) and leave all in a folder._
+
+
 ### Step 2: Process the data.
 
-Run the script with the same domain
+Run the script with the text files that have been scrapped or converted.
+
 ```shell
-python process.py https://www.merlos.org
+python process.py ./text/www.merlos.org
 ```
 
 This will create the files `processed/corpus.csv`, which is just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
