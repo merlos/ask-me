@@ -9,13 +9,6 @@ import os
 import argparse
 import time
 
-# Instantiate the parser
-parser = argparse.ArgumentParser(description='Optional app description')
-
-# Regex pattern to match a URL
-HTTP_URL_PATTERN = r'^http[s]*://.+'
-
-
 # Create a class to parse the HTML and get the hyperlinks
 class HyperlinkParser(HTMLParser):
     def __init__(self):
@@ -87,7 +80,6 @@ def get_domain_hyperlinks(local_domain, url):
     return list(set(clean_links))
 
 
-
 def crawl(url, sleep=0):
     # Parse the URL and get the domain
     local_domain = urlparse(url).netloc
@@ -141,9 +133,10 @@ def crawl(url, sleep=0):
                 queue.append(link)
                 seen.add(link)
 
+# Main
 
-
-import argparse
+# Regex pattern to match a URL
+HTTP_URL_PATTERN = r'^http[s]*://.+'
 
 # Instantiate the parser
 parser = argparse.ArgumentParser(description='Simple web scrapper')
@@ -153,7 +146,6 @@ parser.add_argument('full_url', type=str, help='Website to scrap. Example: http:
 parser.add_argument('-s', '--sleep', type=int, default=0, nargs='?', help='Seconds to wait between requests')
 
 args = parser.parse_args()
-
 
 if not re.search(HTTP_URL_PATTERN, args.full_url):
     parser.error('url shall start with http:// or https://. Example: https://www.merlos.org')
