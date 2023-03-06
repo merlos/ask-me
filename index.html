@@ -1,8 +1,33 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>Ask me</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
   </head>
+
   <body>
+
+    <section class="msger">
+      <header class="msger-header">
+        <div class="msger-header-title">
+          <i class="fas fa-comment-alt"></i> Ask me 
+        </div>
+        <div class="msger-header-options">
+          <span><i class="fas fa-cog"></i></span>
+        </div>
+      </header>
+    
+      <main class="msger-chat"> 
+      </main>
+    
+      <form class="msger-inputarea">
+        <input type="text" class="msger-input" placeholder="Enter your message...">
+        <button type="submit" class="msger-send-btn">Send</button>
+      </form>
+    </section>
+
+<!--
     <h1>Ask me</h1>
     <form method="post">
       <label for="question" >question</label>
@@ -12,29 +37,31 @@
     <div id="answer">
       
     </div>
+    -->
     <script>
-      const ANSWERS_URL = "http://localhost:5000/api/answers"
+      /*
+      const SERVER_URL = window.location.href
+      const ANSWERS_URL = SERVER_URL + 'api/answers'
 
       // Example POST method implementation:
-async function postData(url = '', data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
+      async function postData(url = '', data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          //credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+          });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
 
-
+      
       document.querySelector('form').addEventListener('submit', (event) => {
           event.preventDefault()
           const inputValue = document.querySelector('#question').value
@@ -46,6 +73,8 @@ async function postData(url = '', data = {}) {
               document.querySelector('#answer').innerHTML=answer
           });
       })
+      */
     </script>
+    <script src="/static/ui.js"></script>
   </body>
 </html>
