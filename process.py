@@ -4,7 +4,7 @@ import tiktoken
 import openai
 import time
 import argparse
-import math
+import datetime
 
 from config import CONFIG
 
@@ -202,7 +202,8 @@ for i in range(start_index, len(df), batch_size):
         
         # append the processed data file name to the list
         processed_data_files.append(processed_batch_file)
-        print(f' -- Saved batch {i//batch_size}')
+        now = datetime.datetime.now()
+        print(f'[{now.strftime("%H:%M")}]Saved batch {i//batch_size}')
     except Exception as e:
         print(f'Error processing batch {i//batch_size}: {e}')
         exit(1)

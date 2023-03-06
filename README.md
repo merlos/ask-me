@@ -70,7 +70,11 @@ python process.py ./text/www.merlos.org
 
 This will create the files `processed/corpus.csv`, which is just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
 
-During the initial tests it was noticed that the reliability of OpenAPI was not high. It returned many times error of overloading.
+During the initial tests it was noticed that the reliability of OpenAPI was not high. It returned many times an overloaded error:
+```
+Error processing batch 124: The server is currently overloaded with other requests. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists.
+```
+
 Two measures were implemented controled within `config.py`
 
 1) `CONFIG['idle_time']` Sets an idle time between calls (6s by default)
