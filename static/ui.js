@@ -8,7 +8,7 @@
 const SERVER_URL = window.location.href
 const ANSWERS_URL = SERVER_URL + 'api/answers'
 
-const BOT_WELCOME= "Hi, welcome to Ask me! Go ahead and ask me any question within my knowledge base. 😄"
+const BOT_WELCOME= ["Hi, I am Ask me Bot!", "Go ahead and ask me any question!", "I'll seek the answer within my knowledge base. 😄"]
 
 
 const BOT_IMG = "/static/bot.svg";
