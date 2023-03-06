@@ -41,57 +41,72 @@ After cloning this repo (`git clone https://github.com/merlos/ask-me/`):
 
 ## Usage
 
-### Step 1: Collect/Scrap the data
+### Step 1: Collect the data and convert it in plain text.
 
-Scrap the webpage that will be used as source or your knowledge base from.
+The goal of this step is to gather the data that will be used as corpus. In the repo a few scripts are provided:
 
-```shell
-python scrapper.py https://www.merlos.org
-```
-This will create the folder `./text/www.merlos.org/` with the scrapped pages in text format.
+ 1. `scrapper.py` it takes as argument an URL and goes through all the pages within the domain. For example:
+
+    ```shell
+    python scrapper.py https://www.merlos.org
+    ```
+    This will create the folder `./text/www.merlos.org/` with the scrapped pages in text format.
 
 
-In addition the script `pdftotext.py` is provided. This script takes a set of PDFs and converts them into txt files
+2. `DownloadSharePointDocs.ps1` This powershell script downloads the files from a SharePoint library.
 
-```shell
-python pdftotext ./path/to/pdf --output ./text/www.domain.com/
-```
+    ```powershell
+    # In a powershell prompt
+    .\DownloadSharePointDocuments.ps1 -SiteUrl "https://<tenant-name>.sharepoint.com/sites/yoursite/" 
+                                      -LibraryName "Library"
+                                      -DownloadFolder "./LibraryDocuments"
+    ```
+    Note that `DownloadFolder` must exist. The script downloads the required powershell modules.
 
-**Note:** _This step can be replaced with a conversion of any kind of file into text. For example, a PDF, Word Document, etc. You just need to place the documents converted into plain text (i.e. `.txt`) and leave all in a folder._
+    To run it on a GNU/Linux or a Mac you need to install [PowerShell](https://github.com/PowerShell/PowerShell) (f.i `brew install pwsh`).
+
+
+3. `pdftotext.py` This script takes a folder with a set of PDFs and converts them into txt files
+
+    ```shell
+    python pdftotext ./path/with/pdfs --output ./text/filesfolder/
+    ```
+
+
+**Note:** _This step can be replaced with a conversion of any kind of file into text. For example Word Processor files, presentations, etc. The only requirement is to place the documents converted into plain text, i.e. `.txt`, in a folder for the next step._
 
 
 ### Step 2: Process the data.
 
-Run the script with the text files that have been scrapped or converted.
+Run the following script indicating what is the folder with the text files from the previous step.
 
 ```shell
 python process.py ./text/www.merlos.org
 ```
 
-This will create the files `processed/corpus.csv`, which is just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
+This script will output the files: (1) `processed/corpus.csv`, which is just a list of the txt files in one single csv files, and (2) `processed/embeddings.csv` that includes the embeddings. 
 
-During the initial tests it was noticed that the reliability of OpenAPI was not high. It returned many times an overloaded error:
+During the implementation it was noticed that the reliability of OpenAPI was poor. It returned errors in many ocasions, specially an overloaded API error:
 ```
 Error processing batch 124: The server is currently overloaded with other requests. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists.
 ```
 
-Two measures were implemented controled within `config.py`
+Two measures were implemented, both controled within `config.py`
 
 1) `CONFIG['idle_time']` Sets an idle time between calls (6s by default)
 2) `CONFIG['batch_size']` Removes Process the embeddings in batches. This allows you to rerun the process again.
 
-If you want to process a new corpus but you have an uncompleted corpus you need to delete all the files with the name `processed_batch*` within the processed folder:
-```
+If you want to process a new corpus but you have an uncompleted the processing of an existing corpus you need to delete all the files with the name `processed_batch*` within the processed folder:
+
+```shell
 rm processed/processed_batch*
 ```
-
-Lastly, if the process is broken too many times because of the API errors, you can use this loop:
+Lastly, if the process is broken too many times because of the API errors, you can use this loop to automate relaunching the script till it is done.
 
 ```shell
 until python3 process.py ./text/folder-with-txt-files; do echo "Restarting...";done
 ```
 
-This will relaunch `process.py` till it returns no error.
 
 ## Usage
 
