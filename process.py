@@ -128,7 +128,7 @@ def process_embeddings(x):
     current_embedding = current_embedding + 1 
     print(f'Processed embedding {current_embedding}/{number_of_embeddings}')
     # To prevent free account quota limit, sleep for some time
-    time.sleep(5000/1000) # seconds (float)
+    time.sleep(CONFIG['idle_time']) 
     return embedding
 
 
@@ -205,7 +205,7 @@ for i in range(start_index, len(df), batch_size):
         print(f' -- Saved batch {i//batch_size}')
     except Exception as e:
         print(f'Error processing batch {i//batch_size}: {e}')
-        exit()
+        exit(1)
         break
 
 # concatenate the processed data from all batches into a single dataframe

@@ -33,6 +33,12 @@ CONFIG['tokenized_corpus_csv'] = './processed/.tokenized_corpus.csv'
 CONFIG['max_tokens'] = 500
 
 #
+# Time between calls to OpenAPI 
+# In seconds (float)
+#
+CONFIG['idle_time'] = 6000/1000 
+
+#
 # Batch size
 #
 CONFIG['batch_size'] = 10

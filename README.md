@@ -70,6 +70,25 @@ python process.py ./text/www.merlos.org
 
 This will create the files `processed/corpus.csv`, which is just a list of the pages, and `processed/embeddings.csv` that includes the embeddings. 
 
+During the initial tests it was noticed that the reliability of OpenAPI was not high. It returned many times error of overloading.
+Two measures were implemented controled within `config.py`
+
+1) `CONFIG['idle_time']` Sets an idle time between calls (6s by default)
+2) `CONFIG['batch_size']` Removes Process the embeddings in batches. This allows you to rerun the process again.
+
+If you want to process a new corpus but you have an uncompleted corpus you need to delete all the files with the name `processed_batch*` within the processed folder:
+```
+rm processed/processed_batch*
+```
+
+Lastly, if the process is broken too many times because of the API errors, you can use this loop:
+
+```shell
+until python3 process.py ./text/folder-with-txt-files; do echo "Restarting...";done
+```
+
+This will relaunch `process.py` till it returns no error.
+
 ## Usage
 
 Now it is time to make the questions to the AI. You can use the command line script `ask.py` with the question as argument.
