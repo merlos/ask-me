@@ -107,9 +107,6 @@ body {
   border-bottom-left-radius: 0;
 }
 
-
-
-
 @keyframes skeleton-loading {
   0% {
     background-color: hsl(200, 20%, 80%);
