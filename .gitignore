@@ -5,8 +5,13 @@ __pycache__/
 text/
 processed/embeddings.csv
 processed/corpus.csv
+processed/.tokenized_corpus.csv
+
 
 # Custom testing
 processed/embeddings-digital-resilience.csv
+processed/embeddings-merlos.csv
 processed/corpus-digital-resilience.csv
+processed/corpus-merlos.csv
 Sharepoint-research.md
+

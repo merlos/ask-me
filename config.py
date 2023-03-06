@@ -5,6 +5,12 @@
 CONFIG={}
 
 #
+# Source folder for
+#
+CONFIG['texts_folder'] = './text/'
+
+
+#
 # File where embeddings are stored
 #
 CONFIG['embeddings_csv'] = './processed/embeddings.csv'
@@ -16,7 +22,17 @@ CONFIG['embeddings_csv'] = './processed/embeddings.csv'
 CONFIG['corpus_csv'] = './processed/corpus.csv'
 
 #
-# Source folder for
-#
-CONFIG['texts_folder'] = './text/'
+# This file contains the scrapped csv file that is used as knowledge base. It is the compilation of
+# all the files in text/
+# 
+CONFIG['tokenized_corpus_csv'] = './processed/.tokenized_corpus.csv'
 
+#
+# Max tokens
+#
+CONFIG['max_tokens'] = 500
+
+#
+# Batch size
+#
+CONFIG['batch_size'] = 10
