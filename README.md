@@ -4,7 +4,7 @@ Ask me is a proof of concept (PoC) of the use of OpenAI GPT that allows you to a
 
 It is based on the OpenAI tutorial that explains how to make a [Q&A for a web content](https://platform.openai.com/docs/tutorials/web-qa-embeddings)
 
-
+![Demo using Ask.me](./ask-me-demo.gif)
 
 ## What are the steps to create your own Chat Bot?
 
