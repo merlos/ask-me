@@ -1,6 +1,17 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="128" height="128" fill="#FCDD81"/>
-<circle cx="49.5" cy="49.5" r="9.5" fill="#F26A21" fill-opacity="0.6"/>
-<circle cx="81.5" cy="50.5" r="9.5" fill="#F26A21" fill-opacity="0.6"/>
-<path d="M45 79.5V79.5C57.557 86.0924 72.5189 86.2405 85.204 79.898L86 79.5" stroke="#F7922D" stroke-opacity="0.7" stroke-width="6"/>
+<g clip-path="url(#clip0_713_1083)">
+<rect width="128" height="128" fill="#1CABE2" fill-opacity="0.7"/>
+<path d="M7 119C7 102.431 20.4315 89 37 89H91C107.569 89 121 102.431 121 119V128C121 144.569 107.569 158 91 158H37C20.4315 158 7 144.569 7 128V119Z" fill="#D9D9D9"/>
+<path d="M100 54C100 73.33 84.33 89 65 89C45.67 89 30 73.33 30 54C30 34.67 30 19 65 19C100 19 100 34.67 100 54Z" fill="#E9BE7E"/>
+<circle cx="53.5" cy="46.5" r="3.5" fill="black" fill-opacity="0.7"/>
+<circle cx="75.5" cy="46.5" r="3.5" fill="black" fill-opacity="0.7"/>
+<line x1="31.5" y1="121.5" x2="31.5" y2="133.5" stroke="black" stroke-opacity="0.6" stroke-width="3" stroke-linecap="round"/>
+<line x1="101.5" y1="121.5" x2="101.5" y2="133.5" stroke="black" stroke-opacity="0.6" stroke-width="3" stroke-linecap="round"/>
+<path d="M66 114C66 113.448 66.4477 113 67 113H85C85.5523 113 86 113.448 86 114V134C86 134.552 85.5523 135 85 135H67C66.4477 135 66 134.552 66 134V114Z" fill="black" fill-opacity="0.25"/>
+</g>
+<defs>
+<clipPath id="clip0_713_1083">
+<rect width="128" height="128" fill="white"/>
+</clipPath>
+</defs>
 </svg>
