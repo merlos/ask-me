@@ -54,7 +54,6 @@ def tokenize_corpus(corpus_csv, max_tokens=500):
     df = pd.read_csv(corpus_csv, index_col=0)
     df.columns = ['title', 'text']
 
-    df_chunks = pd.DataFrame( columns=['title', 'text'])
     
     # Tokenize the text and save the number of tokens to a new column
     df['n_tokens'] = df.text.apply(lambda x: len(tokenizer.encode(x)))
@@ -106,18 +105,19 @@ def tokenize_corpus(corpus_csv, max_tokens=500):
 
         # If the number of tokens is greater than the max number of tokens, split the text into chunks
         if row[1]['n_tokens'] > max_tokens:
-            shortened += split_into_many(row[1]['text'])
-    
+            chunks =  split_into_many(row[1]['text'])
+            for chunk in chunks:
+                shortened.append({'title': row[1].title, 'text': chunk})
+
         # Otherwise, add the text to the list of shortened texts
         else:
-            shortened.append( row[1]['text'] )
-    
-    df = pd.DataFrame(shortened, columns = ['text'])
+            shortened.append({'title': row[1].title, 'text': row[1].text})
+
+    df = pd.DataFrame(shortened, columns = ['title', 'text'])
     # Count tokens.
     df['n_tokens'] = df.text.apply(lambda x: len(tokenizer.encode(x)))
-
-    return df    
-
+     
+    return df
 
 def process_embeddings(x):
     global current_embedding
@@ -151,7 +151,7 @@ if not os.path.exists(text_files_path):
 batch_size = CONFIG['batch_size']
 
 # check if there are any existing processed data files
-processed_data_files = [f for f in os.listdir('./processed/') if f.startswith('processed_batch_')]
+processed_data_files = [f'./processed/{f}' for f in os.listdir('./processed/') if f.startswith('processed_batch_')]
 
 df = None
 start_index = 0
@@ -205,6 +205,7 @@ for i in range(start_index, len(df), batch_size):
         print(f' -- Saved batch {i//batch_size}')
     except Exception as e:
         print(f'Error processing batch {i//batch_size}: {e}')
+        exit()
         break
 
 # concatenate the processed data from all batches into a single dataframe
@@ -215,7 +216,7 @@ for file in processed_data_files:
 processed_data = pd.concat(processed_dfs, ignore_index=True)
 
 # save the concatenated processed dataframe to disk
-processed_data.to_csv('./processed/processed_dataframe.csv', index=False)
+processed_data.to_csv(CONFIG['embeddings_csv'], index=False)
 
 # delete the temporary processed data files
 for file in processed_data_files:
