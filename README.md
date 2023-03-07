@@ -119,6 +119,7 @@ Lastly, if the process is broken too many times because of the API errors, you c
 until python3 process.py ./text/folder-with-txt-files; do echo "Restarting...";done
 ```
 
+Definitely, this step is the most painful, specially if you have a large corpus of knowledge. 
 
 ## Usage
 
@@ -164,10 +165,13 @@ The response is something like:
 * A more advanced version using [Dagster](https://dagster.io) and [LangChain](https://github.com/hwchase17/langchain) https://dagster.io/blog/chatgpt-langchain
 * A version using [LangChain](https://github.com/hwchase17/langchain) and a Notion DB https://github.com/hwchase17/notion-qa 
 
+## Attributions
+
+* User interface is based on this CodePen of Shajad Hasemian https://codepen.io/sajadhsm/pen/odaBdd (Copyright (c) 2023 by Sajad Hashemian - MIT License)
 
 ## LICENSE MIT
 
-Copyright (c) 2023 Juan M. Merlos @merlos.
+Copyright (c) 2023 @merlos.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
