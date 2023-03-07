@@ -103,10 +103,10 @@ During the implementation it was noticed that the reliability of OpenAPI was poo
 Error processing batch 124: The server is currently overloaded with other requests. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists.
 ```
 
-Two measures were implemented, both controled within `config.py`
+This may have been because I was in the free tier, but in any case,
 
-1) `CONFIG['idle_time']` Sets an idle time between calls (6s by default)
-2) `CONFIG['batch_size']` Removes Process the embeddings in batches. This allows you to rerun the process again.
+1) Added idle time. I separated the calls to the openAI API 6 seconds by default. In `config.py` it can be setup modifying `CONFIG['idle_time']`.
+2) Processed the embeddings in batches. In case there is an error, when relaunched, process.py will pick up starting from the last saved batch. By default the batch is 10. You can setup the batch size in `config.py` modifying `CONFIG['batch_size']`.
 
 If you want to process a new corpus but you have an uncompleted the processing of an existing corpus you need to delete all the files with the name `processed_batch*` within the processed folder:
 
