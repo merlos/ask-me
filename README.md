@@ -121,9 +121,9 @@ until python3 process.py ./text/folder-with-txt-files; do echo "Restarting...";d
 
 Definitely, this step is the most painful, specially if you have a large corpus of knowledge. 
 
-## Usage
+## Step 3: Asking questions
 
-Now it is time to make the questions to the AI. You can use the command line script `ask.py` with the question as argument.
+Now it is time to ask the questions to the AI. You can use the command line script `ask.py` with the question as argument.
 
 ```shell
 python ask.py "Who is Juan?"
@@ -152,7 +152,6 @@ The response is something like:
 ```
 
 
-
 ## What happens behind the scenes when you ask a question?
 
 1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
@@ -167,10 +166,12 @@ The response is something like:
 * A more advanced version using [Dagster](https://dagster.io) and [LangChain](https://github.com/hwchase17/langchain) https://dagster.io/blog/chatgpt-langchain
 * A version using [LangChain](https://github.com/hwchase17/langchain) and a Notion DB https://github.com/hwchase17/notion-qa 
 
+
 * For improving a large corpus embedding search performance https://platform.openai.com/docs/guides/embeddings/how-can-i-retrieve-k-nearest-embedding-vectors-quickly
 
 ## Attributions
 
+* The work done by [Gobierto in their questions and answers](https://www.gobierto.es/blog/gobierto-preguntas-valoracion-de-las-primeras-respuestas-generadas) was the source of inspiration. 
 * User interface is based on this CodePen of Shajad Hasemian https://codepen.io/sajadhsm/pen/odaBdd (Copyright (c) 2023 by Sajad Hashemian - MIT License)
 
 ## LICENSE MIT
