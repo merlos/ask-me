@@ -7,9 +7,11 @@ from openai.embeddings_utils import distances_from_embeddings
 from config import CONFIG
 
 # Read the embeddings
-df=pd.read_csv(CONFIG['embeddings_csv'], index_col=0)
+#df=pd.read_csv(CONFIG['embeddings_csv'], index_col=0)
+df=pd.read_csv(CONFIG['embeddings_csv'])
 df['embeddings'] = df['embeddings'].apply(eval).apply(np.array)
-#df.head()
+#print(df.head())
+
 
 
 def create_context(
@@ -19,6 +21,7 @@ def create_context(
     Create a context for a question by finding the most similar context from the dataframe
     """
 
+   
     # Get the embeddings for the question
     q_embeddings = openai.Embedding.create(input=question, engine='text-embedding-ada-002')['data'][0]['embedding']
 
