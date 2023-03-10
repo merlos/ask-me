@@ -3,5 +3,5 @@ bind = "127.0.0.1:8000"
 workers = 4
 threads = 2
 worker_class = "sync"
-accesslog = "./log/access.log"
-errorlog = "./log/error.log"
+accesslog = "./log/ask_me_access.log"
+errorlog = "./log/ask_me_error.log"
