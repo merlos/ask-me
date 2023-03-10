@@ -1,4 +1,4 @@
-# gunicorn_config.py
+# gunicorn_config.py for dev environment
 bind = "127.0.0.1:8000"
 workers = 4
 threads = 2

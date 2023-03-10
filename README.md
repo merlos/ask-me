@@ -163,20 +163,24 @@ ENV OPENAI_API_KEY="your_api_key_here"
 First, build the image
 
 ```shell
+# Build for the same architecture of your computer
 docker build -t ask_me .
+
+# To build forcing a X86 (aka amd64) architecture. For example if you are in a M1 chip and you want to run in the cloud with 
+docker buildx build --platform linux/amd64 -t ask_me 
+
 ```
-Then run the image:
+Then run the image locally
 
 ```shell
-docker run -p 8000:8000 --name ask_me `pwd`/log:/var/log/gunicorn ask_me
+docker run -p 8000:8000 --name ask_me `pwd`/log:/home ask_me
 ```
 
 It will run a gunicorn web server in port 8000 (so open <http://localhost:8000>)
 
-The option ```-v `pwd`/log:/var/log/gunicorn``` will add a volume in `./log`. To keep the access and error logs.
+The option ```-v `pwd`/log:/home``` will add a volume in the folder `./log` of your machine and mapped to `/home` in the container.
 
-Note that you should not upload this image into a public docker registry as it would expose your OpenAI API key.
-
+Note that you should not upload this image into a public docker registry as it would expose your OpenAI API key. Alternatively, you can setup the environment variable in the docker instance.
 
 ## What happens behind the scenes when you ask a question?
 
