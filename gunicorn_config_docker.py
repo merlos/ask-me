@@ -1,7 +1,9 @@
 # gunicorn_config.py for Docker
 
 # Listen to all the interfaces
-bind = "0.0.0.0:8000"
+bind = "0.0.0.0:80"
+
+# Number of workers
 workers = 2
 
 # Set a large timeout if your embedding file is big as it may take a while to load the app

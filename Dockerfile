@@ -11,7 +11,7 @@ RUN pip install --upgrade pip && pip install tiktoken==0.1.2 #<-- Shall be same 
 #-----------------------------------------------------------------------
 FROM python:3.11-slim-bullseye
 
-RUN apt-get update && apt-get install -y gcc curl
+RUN apt-get update && apt-get install -y gcc curl procps
 
 # Set the working directory to /app
 WORKDIR /app
@@ -33,7 +33,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 ENV OPENAI_API_KEY="your_api_key_here"
 
 # Expose port 8000 for the Flask application to run on
-EXPOSE 8000
+EXPOSE 80
 
 # Create a volume for Gunicorn logs
 VOLUME /var/log/
