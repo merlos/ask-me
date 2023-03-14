@@ -173,7 +173,7 @@ docker buildx build --platform linux/amd64 -t ask_me .
 Then run the image locally
 
 ```shell
-docker run -p 80:8000 --name ask_me -v `pwd`/log:/home ask_me
+docker run -p 8000:80 --name ask_me -v `pwd`/log:/home ask_me
 ```
 Notes:
  - The file `gunicorn_config_docker.py` is used to setup gunicorn. Check it out!
