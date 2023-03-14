@@ -34,5 +34,12 @@ def home():
   except Exception as e:
     return str(e)
 
+# For certbot
+CUSTOM_STATIC_PATH=app.root_path + './static/.well-known/'
+@app.route('/.well-known/<path:filename>')
+def wellKnownRoute(filename):
+    return send_from_directory(app.config['CUSTOM_STATIC_PATH'], filename, conditional=True)
+
+
 if __name__ == "__main__":
   app.run(debug=True)
