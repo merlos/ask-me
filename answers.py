@@ -32,11 +32,12 @@ def create_context(
     df['distances'] = distances_from_embeddings(q_embeddings, df['embeddings'].values, distance_metric='cosine')
     
     returns = []
+    titles = []
     cur_len = 0
 
     # Sort by distance and add the text to the context until the context is too long
     for i, row in df.sort_values('distances', ascending=True).iterrows():
-        
+        #print(row)
         # Add the length of the text to the current length
         cur_len += row['n_tokens'] + 4
         
@@ -45,9 +46,10 @@ def create_context(
             break
         
         # Else add it to the text that is being returned
-        returns.append(row["text"])
-
+        returns.append(row['text'])
+        titles.append(row['title'])
     # Return the context
+    #print(titles)
     return "\n\n###\n\n".join(returns)
 
 
@@ -94,7 +96,7 @@ def answer_question(
 
     try:
 
-        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context, be creative and make up the answer.\n\nContext: {context}\n\n---\n\nQuestion: {question}"
+        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context, be creative and make up the answer.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:"
 
         # Create a completions using the question and context
         response = openai.Completion.create(
@@ -111,16 +113,19 @@ def answer_question(
         answer = response["choices"][0]["text"].strip()
         
         if log_answer:
-           row = {
-                'date': datetime.date.today(),
-                'question': question,
-                'prompt': prompt,
-                'answer': answer
-           }
-           append_to_csv(answers_log_file, row)
+            try:
+                row = {
+                    'date': datetime.date.today(),
+                    'question': question,
+                    'prompt': prompt,
+                    'answer': answer
+                }
+                append_to_csv(answers_log_file, row)
+            except Exception as e:
+                print(e)
         return response["choices"][0]["text"].strip()
 
     except Exception as e:
         print(e)
-        return ""
+        return "E"
 
