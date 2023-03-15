@@ -3,6 +3,9 @@
 # Listen to all the interfaces
 bind = "0.0.0.0:80"
 
+#certfile="/home/fullchain.pem"
+#keyfile='/home/privkey.pem'
+
 # Number of workers
 workers = 2
 
@@ -17,3 +20,5 @@ worker_class = "sync"
 # In Azure, there is a persistent volume in /home
 accesslog = "/home/access.log"
 errorlog = "/home/error.log"
+
+

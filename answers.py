@@ -96,7 +96,7 @@ def answer_question(
 
     try:
 
-        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context, be creative and make up the answer.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:"
+        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context (1) say that you do not know,  ask the user to pose the question in a different way.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:"
 
         # Create a completions using the question and context
         response = openai.Completion.create(
