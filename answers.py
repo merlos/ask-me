@@ -69,7 +69,7 @@ def append_to_csv(filename, row_dict):
 
 def answer_question(
     df,
-    model="text-davinci-003",
+    model="gpt-3.5-turbo",
     question="What can you tell me about Juan Merlos?",
     max_len=1800,
     size="ada",
@@ -88,6 +88,7 @@ def answer_question(
         df,
         max_len=max_len,
         size=size,
+        debug=false,
     )
     # If debug, print the raw model response
     if debug:
@@ -95,37 +96,39 @@ def answer_question(
         print("\n\n")
 
     try:
-
-        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context (1) say that you do not know,  ask the user to pose the question in a different way.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:"
-
-        # Create a completions using the question and context
-        response = openai.Completion.create(
-            prompt = prompt,
-            temperature=0,
-            max_tokens=max_tokens,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0,
-            stop=stop_sequence,
+        conversation = [
+            {"role": "system", "content": "You are a helpful assistant that replies with concrete answers based on the context provided by the user. If you dont know the answer, you admit it and invite the user to pose it in another way"},
+            {"role": "user", "content": f"Based on the following conte\n\nxt: {context}\n\n answer the following question: \n\n {question}\n"},
+        ]
+        response = openai.ChatCompletion.create(
             model=model,
+            messages=conversation,
+            max_tokens=max_tokens,
+            stop=stop_sequence,
+            temperature=0,
+            n=1,
+            
         )
+        #print(response)
+        answer = response['choices'][0]['message']['content']
 
-        answer = response["choices"][0]["text"].strip()
+
         
         if log_answer:
             try:
                 row = {
                     'date': datetime.date.today(),
                     'question': question,
-                    'prompt': prompt,
+                    'system': conversation[0],
+                    'prompt': conversation[1],
                     'answer': answer
                 }
                 append_to_csv(answers_log_file, row)
             except Exception as e:
                 print(e)
-        return response["choices"][0]["text"].strip()
-
+                
+        return answer
+    
     except Exception as e:
         print(e)
-        return "E"
-
+        return "There was an issue while processing your question... :("
