@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
-from flask import send_file
+from flask import send_file, send_from_directory
 
+from config import CONFIG
 # import from parent directory
 #import sys
 #sys.path.append('../')
 from answers import df, answer_question
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -18,9 +20,7 @@ class Answers(Resource):
   def post(self):
     global df
     args= answers_post_args.parse_args()
-    print("-------")
-    print(args.question)
-    answer= answer_question(df, question=args.question)
+    answer= answer_question(df, question=args.question, log_answer=CONFIG['log_answers'], answers_log_file=CONFIG['answers_log_file'])
     return {'question': args.question, 'answer':answer}
   
 api.add_resource(Answers, '/api/answers')
@@ -33,6 +33,12 @@ def home():
     return send_file('./index.html')
   except Exception as e:
     return str(e)
+
+# For certbot
+@app.route('/.well-known/<path:filename>')
+def wellKnownRoute(filename):
+    return send_from_directory(app.root_path + '/static/.well-known/', filename, conditional=True, as_attachment=True)
+
 
 if __name__ == "__main__":
   app.run(debug=True)

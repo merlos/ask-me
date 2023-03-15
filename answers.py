@@ -3,6 +3,9 @@ import openai
 import pandas as pd
 import numpy as np
 from openai.embeddings_utils import distances_from_embeddings
+import datetime
+import os
+import csv
 
 from config import CONFIG
 
@@ -29,11 +32,12 @@ def create_context(
     df['distances'] = distances_from_embeddings(q_embeddings, df['embeddings'].values, distance_metric='cosine')
     
     returns = []
+    titles = []
     cur_len = 0
 
     # Sort by distance and add the text to the context until the context is too long
     for i, row in df.sort_values('distances', ascending=True).iterrows():
-        
+        #print(row)
         # Add the length of the text to the current length
         cur_len += row['n_tokens'] + 4
         
@@ -42,10 +46,26 @@ def create_context(
             break
         
         # Else add it to the text that is being returned
-        returns.append(row["text"])
-
+        returns.append(row['text'])
+        titles.append(row['title'])
     # Return the context
+    #print(titles)
     return "\n\n###\n\n".join(returns)
+
+
+def append_to_csv(filename, row_dict):
+    # Check if the file already exists
+    file_exists = os.path.isfile(filename)
+
+    # If the file doesn't exist, create it with the column names
+    fieldnames = row_dict.keys()
+    with open(filename, 'a', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        if not file_exists:
+            writer.writeheader()
+
+        # Write the new row to the CSV file
+        writer.writerow(row_dict)
 
 def answer_question(
     df,
@@ -56,7 +76,9 @@ def answer_question(
     debug=True,
     max_tokens=150,
     stop_sequence=None,
-    language="English"
+    language="English",
+    log_answer=False,
+    answers_log_file='./logs/answers.log'
 ):
     """
     Answer a question based on the most similar context from the dataframe texts
@@ -73,9 +95,12 @@ def answer_question(
         print("\n\n")
 
     try:
+
+        prompt = f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context (1) say that you do not know,  ask the user to pose the question in a different way.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:"
+
         # Create a completions using the question and context
         response = openai.Completion.create(
-            prompt=f"Answer the question in {language} based on the context below, and if the question can't be answered based on the context, be creative and make up the answer.\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:",
+            prompt = prompt,
             temperature=0,
             max_tokens=max_tokens,
             top_p=1,
@@ -84,8 +109,23 @@ def answer_question(
             stop=stop_sequence,
             model=model,
         )
+
+        answer = response["choices"][0]["text"].strip()
+        
+        if log_answer:
+            try:
+                row = {
+                    'date': datetime.date.today(),
+                    'question': question,
+                    'prompt': prompt,
+                    'answer': answer
+                }
+                append_to_csv(answers_log_file, row)
+            except Exception as e:
+                print(e)
         return response["choices"][0]["text"].strip()
+
     except Exception as e:
         print(e)
-        return ""
+        return "E"
 

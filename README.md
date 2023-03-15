@@ -121,9 +121,9 @@ until python3 process.py ./text/folder-with-txt-files; do echo "Restarting...";d
 
 Definitely, this step is the most painful, specially if you have a large corpus of knowledge. 
 
-## Usage
+## Step 3: Asking questions
 
-Now it is time to make the questions to the AI. You can use the command line script `ask.py` with the question as argument.
+Now it is time to ask the questions to the AI. You can use the command line script `ask.py` with the question as argument.
 
 ```shell
 python ask.py "Who is Juan?"
@@ -151,7 +151,36 @@ The response is something like:
 }
 ```
 
+## Using Docker
 
+You can also run the output in docker.
+
+Edit `Dockerfile` to add your `OPENAI_API_KEY` by replacing the line
+```dockerfile
+ENV OPENAI_API_KEY="your_api_key_here"
+```
+
+First, build the image
+
+```shell
+# Build for the same architecture of your computer
+docker build -t ask_me .
+
+# To build forcing a X86 (aka amd64) architecture. For example if you are in a M1 chip and you want to run in the cloud with 
+docker buildx build --platform linux/amd64 -t ask_me .
+
+```
+Then run the image locally
+
+```shell
+docker run -p 8000:80 --name ask_me -v `pwd`/log:/home ask_me
+```
+Notes:
+ - The file `gunicorn_config_docker.py` is used to setup gunicorn. Check it out!
+ - Gunicorn web server in bound in port 80 within the container. However in `-p 80:8000` we are forwarding it to port 8000 in our local machine, so you need to open <http://localhost:8000>.
+ - The option ```-v `pwd`/log:/home``` will add a volume in the folder `./log` of your machine and mapped to `/home` in the container. Error and access logs are stored in `/home` within the Docker instance.
+ - You should not upload this image into a public docker registry as it would expose your OpenAI API key. Alternatively, you can setup the environment variable following the instructions of your cloud provider.
+ - No `https` is added.
 
 ## What happens behind the scenes when you ask a question?
 
@@ -167,10 +196,12 @@ The response is something like:
 * A more advanced version using [Dagster](https://dagster.io) and [LangChain](https://github.com/hwchase17/langchain) https://dagster.io/blog/chatgpt-langchain
 * A version using [LangChain](https://github.com/hwchase17/langchain) and a Notion DB https://github.com/hwchase17/notion-qa 
 
+
 * For improving a large corpus embedding search performance https://platform.openai.com/docs/guides/embeddings/how-can-i-retrieve-k-nearest-embedding-vectors-quickly
 
 ## Attributions
 
+* The work done by [Gobierto in their questions and answers](https://www.gobierto.es/blog/gobierto-preguntas-valoracion-de-las-primeras-respuestas-generadas) was the source of inspiration. 
 * User interface is based on this CodePen of Shajad Hasemian https://codepen.io/sajadhsm/pen/odaBdd (Copyright (c) 2023 by Sajad Hashemian - MIT License)
 
 ## LICENSE MIT
