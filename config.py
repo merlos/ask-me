@@ -50,4 +50,4 @@ CONFIG['log_answers'] = True
 #
 # Q&A Save
 #
-CONFIG['answers_log_file'] = '/home/answers.log'
+CONFIG['answers_log_file'] = './log/answers.log'
