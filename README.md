@@ -147,9 +147,16 @@ The response is something like:
 ```json
 { 
     "question": "Who is Juan?",
-    "answer": "The answer provided by OpenAI API"
+    "answer": "The answer provided by Chat GPT based on the knoledge base"
 }
 ```
+
+## What happens behind the scenes when you ask a question?
+
+1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
+
+2) Once we have the text that most likely have the answer, we'll ask the AI behind ChatGPT to build an answer based on the chunks of text attached. 
+
 
 ## Using Docker
 
@@ -180,14 +187,23 @@ Notes:
  - Gunicorn web server in bound in port 80 within the container. However in `-p 80:8000` we are forwarding it to port 8000 in our local machine, so you need to open <http://localhost:8000>.
  - The option ```-v `pwd`/log:/home``` will add a volume in the folder `./log` of your machine and mapped to `/home` in the container. Error and access logs are stored in `/home` within the Docker instance.
  - You should not upload this image into a public docker registry as it would expose your OpenAI API key. Alternatively, you can setup the environment variable following the instructions of your cloud provider.
- - No `https` is added.
+ 
+## Production  
 
-## What happens behind the scenes when you ask a question?
+Some stuff missing to be a releseable app:
 
-1) The first thing that will be done is to try to find the chunks of text that most probably have the answer to the question. To do that we'll pass the embeddings and the question to one of the OpenAI endpoints API.
-
-2) Once we have the text that most likely have the answer, we'll ask the AI behind ChatGPT (i.e GPT) to build an answer based on the chunks of text attached. 
-
+ - Test that the responses are actually valuable in your context.
+ - Clean up the .txt files before moving to the embeddings creation phase.
+ 
+ - Input sanitation (caracters allowed, max length of question)
+ - Copy only strictly necesary files to the Docker image
+ - HTTP running account (currently run using root)
+ - API authentication and authorization
+ - Better way to share API keys with the Docker image.
+ - Multi-environment config.py support
+ - Put a proxy before reaching the app (nginx)
+ - Monitoring, etc...
+ 
 
 ## References
 
