@@ -194,8 +194,9 @@ Some stuff missing to be a releseable app:
 
  - Test that the responses are actually valuable in your context.
  - Clean up the .txt files before moving to the embeddings creation phase.
- 
+
  - Input sanitation (caracters allowed, max length of question)
+ - For long knowledge bases, add search performance.
  - Copy only strictly necesary files to the Docker image
  - HTTP running account (currently run using root)
  - API authentication and authorization
@@ -211,8 +212,6 @@ Some stuff missing to be a releseable app:
 * Source code of the tutorial https://github.com/openai/openai-cookbook/tree/main/solutions/web_crawl_Q%26A
 * A more advanced version using [Dagster](https://dagster.io) and [LangChain](https://github.com/hwchase17/langchain) https://dagster.io/blog/chatgpt-langchain
 * A version using [LangChain](https://github.com/hwchase17/langchain) and a Notion DB https://github.com/hwchase17/notion-qa 
-
-
 * For improving a large corpus embedding search performance https://platform.openai.com/docs/guides/embeddings/how-can-i-retrieve-k-nearest-embedding-vectors-quickly
 
 ## Attributions
