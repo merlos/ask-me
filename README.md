@@ -194,16 +194,16 @@ Some stuff missing to be a releseable app:
 
  - Test that the responses are actually valuable in your context.
  - Clean up the .txt files before moving to the embeddings creation phase.
-
- - Input sanitation (caracters allowed, max length of question)
- - For long knowledge bases, add search performance.
- - Copy only strictly necesary files to the Docker image
+ - Input sanitation to prevent attacks such as XSS and SQLinjection (characters allowed, max length of a question)
+ - For long knowledge bases, add search performance (there is a link in references below)
+ - Copy only strictly necesary files to the Docker image (all files are being copied, even the ones not needed)
  - HTTP running account (currently run using root)
  - API authentication and authorization
- - Better way to share API keys with the Docker image.
+ - Add SSL
+ - Find a better way to share API keys with the Docker image.
  - Multi-environment config.py support
  - Put a proxy before reaching the app (nginx)
- - Monitoring, etc...
+ - Monitoring, etc.
  
 
 ## References
