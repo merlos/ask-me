@@ -105,7 +105,7 @@ def tokenize_corpus(corpus_csv, max_tokens=500):
 
         # If the number of tokens is greater than the max number of tokens, split the text into chunks
         if row[1]['n_tokens'] > max_tokens:
-            chunks =  split_into_many(row[1]['text'])
+            chunks =  split_into_many(row[1]['text'], max_tokens)
             for chunk in chunks:
                 shortened.append({'title': row[1].title, 'text': chunk})
 
