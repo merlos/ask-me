@@ -21,20 +21,17 @@ It is based on the OpenAI tutorial that explains how to make a [Q&A for a web co
 Pre-requisites:
 
 * Python (it was tested with v3.9)
-* [OpenAI account](https://platform.openai.com/), and and [API key](https://platform.openai.com/account/api-keys). You get $18 USD of free credits for testing.
+* [OpenAI account](https://platform.openai.com/), and and [API key](https://platform.openai.com/account/api-keys). You get some USD of free credits for testing.
 
 
 After cloning this repo (`git clone https://github.com/merlos/ask-me/`):
 
-1. Activate the virtual environment 
-    ```shell
-    source venv/bin/activate
-    ```
-2. Install requirements
+
+1. Install requirements
     ```shell
     pip install -r requirements.txt
     ```
-3. Set the OpenAI API key environment variable
+2. Set the OpenAI API key environment variable
   
     ```shell
 
@@ -98,7 +95,7 @@ python process.py ./text/www.merlos.org
 
 This script will output the files: (1) `processed/corpus.csv`, which is just a list of the txt files in one single csv files, and (2) `processed/embeddings.csv` that includes the embeddings. 
 
-During the implementation it was noticed that the reliability of OpenAPI was poor. It returned errors in many ocasions, specially an overloaded API error:
+During the implementation it was noticed that the reliability of OpenAPI was poor. It returned errors in many occasions, specially an overloaded API error:
 ```
 Error processing batch 124: The server is currently overloaded with other requests. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists.
 ```
