@@ -7,12 +7,12 @@ bind = "0.0.0.0:80"
 #keyfile='/home/privkey.pem'
 
 # Number of workers
-workers = 2
+workers = 5
 
 # Set a large timeout if your embedding file is big as it may take a while to load the app
 # You'll know that you have to increase the timeout if in error.log you see something like
 #  [CRITICAL] WORKER TIMEOUT (pid:16) 
-timeout = 300
+timeout = 60
 
 threads = 2
 worker_class = "sync"
